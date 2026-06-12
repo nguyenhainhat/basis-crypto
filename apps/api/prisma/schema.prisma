@@ -1,0 +1,34 @@
+// apps/api/prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(uuid())
+  walletAddress  String   @unique // Always stored lowercase
+  username       String?  @unique
+  profilePicture String?
+  kudosReceived  Kudos[]  @relation("Receiver")
+  kudosSent      Kudos[]  @relation("Sender")
+  createdAt      DateTime @default(now())
+}
+
+model Kudos {
+  id          String   @id @default(uuid())
+  message     String
+  points      Int      @default(1)
+  sender      User     @relation("Sender", fields: [senderId], references: [id])
+  senderId    String
+  receiver    User     @relation("Receiver", fields: [receiverId], references: [id])
+  receiverId  String
+  timestamp   DateTime @default(now())
+
+  @@index([senderId])
+  @@index([receiverId])
+}

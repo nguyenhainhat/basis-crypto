@@ -1,0 +1,21 @@
+{
+  "landingHero": {
+    "badge": "Reputation & Recognition Ledger",
+    "title": "Immutable Reputation & Gasless Peer Recognition",
+    "subtitle": "dWorkspace lets you recognize your peers instantly. Build permanent on-chain credentials represented by non-transferable Soulbound Tokens.",
+    "features": {
+      "sbt": {
+        "title": "Soulbound Tokens",
+        "description": "Permanent ERC-1155 reputation markers that remain linked to your work permanently."
+      },
+      "kudos": {
+        "title": "Gasless Kudos",
+        "description": "Express instant workspace support securely using cryptographically validated credentials."
+      },
+      "siwe": {
+        "title": "Secure SIWE Signatures",
+        "description": "Sign-in with Ethereum securely prevents replay attacks and eliminates passwords completely."
+      }
+    }
+  }
+}

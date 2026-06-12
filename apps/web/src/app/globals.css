@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+:root {
+  --background: #080810;
+  --foreground: #f4f4f5;
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --card: #12121e;
+  --card-border: #1e1e2f;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-card: var(--card);
+  --color-card-border: var(--color-card-border);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(244, 60%, 12%, 0.6) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(263, 65%, 12%, 0.6) 0px, transparent 50%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* Premium Glassmorphic Layout Styles */
+.glass {
+  background: rgba(18, 18, 30, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-hover:hover {
+  background: rgba(22, 22, 36, 0.85);
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 0 25px rgba(99, 102, 241, 0.12);
+  transform: translateY(-2px);
+}
