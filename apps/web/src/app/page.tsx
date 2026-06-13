@@ -7,6 +7,7 @@ import { apiFetch } from '../config/api';
 import { API_ENDPOINTS } from '../config/endpoints';
 import { useUserProfile } from '../hooks/useUsers';
 import { useUserKudos } from '../hooks/useKudos';
+import * as Sentry from '@sentry/nextjs';
 
 // Components
 import { Navbar } from '../components/Navbar';
@@ -67,6 +68,12 @@ export default function Home() {
     setIsSigning(true);
     setAuthError(null);
 
+    Sentry.addBreadcrumb({
+      category: 'ui.auth',
+      message: `User ${address} initiated SIWE sign-in`,
+      level: 'info'
+    });
+
     try {
       const { nonce } = await apiFetch(API_ENDPOINTS.AUTH.NONCE);
 
@@ -88,9 +95,21 @@ export default function Home() {
       });
 
       setSession(result.access_token, address);
+      
+      Sentry.addBreadcrumb({
+        category: 'ui.auth',
+        message: 'SIWE session verified and established successfully',
+        level: 'info'
+      });
     } catch (err: unknown) {
       const error = err as Error;
       console.error('SIWE signature verification failed:', error);
+      Sentry.captureException(error);
+      Sentry.addBreadcrumb({
+        category: 'ui.auth',
+        message: `SIWE login failed: ${error.message}`,
+        level: 'error'
+      });
       setAuthError(error.message || 'Signature verification rejected.');
     } finally {
       setIsSigning(false);
@@ -98,6 +117,11 @@ export default function Home() {
   };
 
   const handleManualLogout = () => {
+    Sentry.addBreadcrumb({
+      category: 'ui.auth',
+      message: 'User explicitly logged out',
+      level: 'info'
+    });
     clearSession();
     disconnect();
   };

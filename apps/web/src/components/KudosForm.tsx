@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Send, CheckCircle, Loader2 } from 'lucide-react';
 import { useSendKudos } from '../hooks/useKudos';
+import * as Sentry from '@sentry/nextjs';
 
 export function KudosForm() {
   const [receiver, setReceiver] = React.useState('');
@@ -15,14 +16,31 @@ export function KudosForm() {
     setSendSuccess(false);
     setSendError(null);
 
+    Sentry.addBreadcrumb({
+      category: 'ui.click',
+      message: `Initiated Kudos transaction to ${receiver}`,
+      level: 'info'
+    });
+
     try {
       await sendKudos({ receiverAddress: receiver, message });
       setSendSuccess(true);
       setReceiver('');
       setMessage('');
+      Sentry.addBreadcrumb({
+        category: 'ui.action',
+        message: 'Kudos successfully sent',
+        level: 'info',
+      });
       setTimeout(() => setSendSuccess(false), 4000);
     } catch (err: unknown) {
       const error = err as Error;
+      Sentry.captureException(err);
+      Sentry.addBreadcrumb({
+        category: 'ui.error',
+        message: `Failed to send kudos: ${error.message}`,
+        level: 'error',
+      });
       setSendError(error.message || 'Failed to dispatch Kudos points.');
     }
   };

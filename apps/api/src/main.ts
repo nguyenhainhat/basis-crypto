@@ -3,13 +3,9 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import { SentryInterceptor } from './common/interceptors/sentry.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-  // Bind Global Sentry Interceptor for tracing and error tracking
-  app.useGlobalInterceptors(new SentryInterceptor());
 
   // Global Validation Pipe
   app.useGlobalPipes(

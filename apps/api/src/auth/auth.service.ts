@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { SiweMessage, generateNonce } from 'siwe';
 import { UsersService } from '../users/users.service';
-import * as Sentry from '@sentry/node';
+import * as Sentry from '@sentry/nestjs';
 
 @Injectable()
 export class AuthService {
