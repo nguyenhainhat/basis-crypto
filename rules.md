@@ -1,9 +1,0 @@
-- write unit test for all functions
-- optimze code for performance
-- re-write the code unit test when have new functions or update function
-- give me cmd, I will run myself for install something
-- Update plan when have new features
-- Update histories chat if I ask
-- Follow step by step
-- give me update plan before start
-- give me time to understand the code
